@@ -31,3 +31,9 @@ skip-name-resolve
 docker restart mysql
 ```
 
+设置Docker启动时启动mysql
+
+```shell
+docker update mysql --restart=always
+```
+
