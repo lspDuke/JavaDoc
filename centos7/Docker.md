@@ -53,10 +53,20 @@ yum remove docker \
 # 2.安装包
 yum install -y yum-utils
 # 3.设置镜像仓库
-yum-config-manager \
-    --add-repo \
-    https://download.docker.com/linux/centos/docker-ce.repo # 默认国外的
-    http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo # 阿里云
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://xirgurp7.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+
+// yum-config-manager \
+//    --add-repo \
+//    https://download.docker.com/linux/centos/docker-ce.repo # 默认国外的
+//    http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo # 阿里云
+    
 # 4.安装dokcer相关 ce:社区 ee：企业
 yum install docker-ce docker-ce-cli containerd.io
 # 5.更新下yum索引
